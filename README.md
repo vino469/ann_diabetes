@@ -1,10 +1,10 @@
 # ANN Diabetes Prediction Project
 
-This project demonstrates how to build an Artificial Neural Network (ANN) using TensorFlow and Keras to predict whether a person has diabetes based on medical diagnostic measurements.
+This project demonstrates how to build an Artificial Neural Network (ANN) using TensorFlow and Keras to predict whether a patient has diabetes based on medical diagnostic measurements.
 
 ---
 
-# 📌 Project Overview
+## 📌 Project Overview
 
 The project includes:
 
@@ -19,7 +19,7 @@ The project includes:
 
 ---
 
-# 🧠 Technologies Used
+## 🧠 Technologies Used
 
 - Python
 - Pandas
@@ -30,11 +30,11 @@ The project includes:
 
 ---
 
-# 📂 Dataset Information
+## 📂 Dataset Information
 
 The project uses the **Pima Indians Diabetes Dataset**.
 
-## Features
+### Features
 
 - Pregnancies
 - Glucose
@@ -45,16 +45,14 @@ The project uses the **Pima Indians Diabetes Dataset**.
 - DiabetesPedigreeFunction
 - Age
 
-## Target
+### Target
 
 - `0` → No Diabetes
 - `1` → Diabetes
 
 ---
 
-# ⚙️ Data Preprocessing
-
-Feature scaling is performed using `StandardScaler`.
+## ⚙️ Data Preprocessing
 
 ```python
 from sklearn.preprocessing import StandardScaler
@@ -63,14 +61,16 @@ scaler = StandardScaler()
 
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
+✂️ Train-Test Splitting
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
+)
 🧠 ANN Model Architecture
-
-The ANN model consists of:
-
-Input Layer with 8 features
-Hidden Layer 1 → 12 neurons with ReLU activation
-Hidden Layer 2 → 8 neurons with ReLU activation
-Output Layer → 1 neuron with Sigmoid activation
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
@@ -80,48 +80,36 @@ model = Sequential([
     Dense(1, activation='sigmoid')
 ])
 ⚡ Model Compilation
-
-The model uses:
-
-Optimizer → Adam
-Loss Function → Binary Crossentropy
-Metric → Accuracy
 model.compile(
     optimizer='adam',
     loss='binary_crossentropy',
     metrics=['accuracy']
 )
 🚀 Model Training
-
-The model is trained for 100 epochs with a batch size of 10.
-
 history = model.fit(
     X_train,
     y_train,
     epochs=100,
-    batch_size=10
+    batch_size=10,
+    validation_split=0.2
 )
 📊 Model Evaluation
-
-The model performance is evaluated using test data.
-
 loss, accuracy = model.evaluate(X_test, y_test)
 
 print("Loss:", loss)
 print("Accuracy:", accuracy)
-Evaluation Metrics
+
+The project evaluates the model using:
+
 Accuracy
 Precision
 Recall
 F1-Score
 Confusion Matrix
-
-Example:
-
 from sklearn.metrics import classification_report, confusion_matrix
 
 y_pred_prob = model.predict(X_test)
-y_pred = (y_pred_prob >= 0.5)
+y_pred = (y_pred_prob >= 0.5).astype(int)
 
 print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
@@ -135,11 +123,17 @@ jupyter notebook
 
 Then open:
 
-ann_diabetes_project - task.ipynb
+ann_diabetes_project_task.ipynb
 📁 Project Structure
 ├── diabetes.csv
-├── ann_diabetes_project - task.ipynb
+├── ann_diabetes_project_task.ipynb
 ├── README.md
-🎯 Conclusion
+🎯 Future Improvements
+Add Dropout Layers
+Hyperparameter Tuning
+Deploy Using Streamlit
+Improve Accuracy
+Add Visualization Dashboard
+⭐ Conclusion
 
-This project demonstrates how Deep Learning can be applied to medical datasets for binary classification problems such as diabetes prediction. Using an ANN with TensorFlow and Keras helps achieve effective prediction performance with structured healthcare data.
+This project provides a beginner-friendly implementation of an Artificial Neural Network for diabetes prediction using TensorFlow and Keras. It demonstrates how deep learning can be applied to healthcare-related prediction problems using structured medical data.
