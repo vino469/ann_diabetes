@@ -27,6 +27,7 @@ The project includes:
 - Scikit-learn
 - TensorFlow
 - Keras
+- Matplotlib
 
 ---
 
@@ -54,6 +55,10 @@ The project uses the **Pima Indians Diabetes Dataset**.
 
 ## ⚙️ Data Preprocessing
 
+The dataset is preprocessed before training the ANN model.
+
+### Feature Scaling
+
 ```python
 from sklearn.preprocessing import StandardScaler
 
@@ -62,6 +67,9 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 ✂️ Train-Test Splitting
+
+The dataset is divided into training and testing sets.
+
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(
@@ -71,6 +79,13 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 🧠 ANN Model Architecture
+
+The ANN model contains:
+
+Input Layer
+Two Hidden Layers
+Output Layer
+Model Structure
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
@@ -79,13 +94,25 @@ model = Sequential([
     Dense(8, activation='relu'),
     Dense(1, activation='sigmoid')
 ])
+Activation Functions
+ReLU → Used in hidden layers
+Sigmoid → Used in output layer for binary classification
 ⚡ Model Compilation
+
+The model is compiled using:
+
+Optimizer → Adam
+Loss Function → Binary Crossentropy
+Evaluation Metric → Accuracy
 model.compile(
     optimizer='adam',
     loss='binary_crossentropy',
     metrics=['accuracy']
 )
 🚀 Model Training
+
+The model is trained for 100 epochs with batch size 10.
+
 history = model.fit(
     X_train,
     y_train,
@@ -94,10 +121,14 @@ history = model.fit(
     validation_split=0.2
 )
 📊 Model Evaluation
+
+The model performance is evaluated on test data.
+
 loss, accuracy = model.evaluate(X_test, y_test)
 
-print("Loss:", loss)
-print("Accuracy:", accuracy)
+print("Test Loss:", loss)
+print("Test Accuracy:", accuracy)
+Evaluation Metrics
 
 The project evaluates the model using:
 
@@ -113,16 +144,37 @@ y_pred = (y_pred_prob >= 0.5).astype(int)
 
 print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
+📈 Accuracy and Loss Visualization
+import matplotlib.pyplot as plt
+
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+
+plt.title('Model Accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Validation'])
+
+plt.show()
+🔮 Prediction Example
+sample = [[2,120,70,20,79,25.0,0.5,33]]
+
+sample = scaler.transform(sample)
+
+prediction = model.predict(sample)
+
+if prediction >= 0.5:
+    print("Diabetic")
+else:
+    print("Not Diabetic")
 ▶️ How to Run the Project
 Step 1: Clone Repository
 git clone your-repository-link
 Step 2: Install Required Libraries
-pip install pandas numpy scikit-learn tensorflow
+pip install pandas numpy matplotlib scikit-learn tensorflow
 Step 3: Run Jupyter Notebook
 jupyter notebook
-
-Then open:
-
+Step 4: Open Notebook
 ann_diabetes_project_task.ipynb
 📁 Project Structure
 ├── diabetes.csv
@@ -131,9 +183,19 @@ ann_diabetes_project_task.ipynb
 🎯 Future Improvements
 Add Dropout Layers
 Hyperparameter Tuning
+Improve Model Accuracy
 Deploy Using Streamlit
-Improve Accuracy
 Add Visualization Dashboard
+Save and Load Trained Model
+
 Conclusion
 
 This project provides a beginner-friendly implementation of an Artificial Neural Network for diabetes prediction using TensorFlow and Keras. It demonstrates how deep learning can be applied to healthcare-related prediction problems using structured medical data.
+
+The project also helps in understanding:
+
+Data preprocessing
+ANN architecture
+Binary classification
+Model training and evaluation
+Prediction using Deep Learning
