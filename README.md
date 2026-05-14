@@ -134,6 +134,6 @@ Hyperparameter Tuning
 Deploy Using Streamlit
 Improve Accuracy
 Add Visualization Dashboard
-⭐ Conclusion
+Conclusion
 
 This project provides a beginner-friendly implementation of an Artificial Neural Network for diabetes prediction using TensorFlow and Keras. It demonstrates how deep learning can be applied to healthcare-related prediction problems using structured medical data.
